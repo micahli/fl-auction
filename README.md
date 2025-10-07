@@ -161,7 +161,7 @@ src/
 │   │   ├── schema.graphql
 │   │   ├── schema.resolvers.go
 │   │   ├── resolver.go
-│   │   ├── generated.go
+│   │   ├── d.go
 │   │   └── model/
 │   │       └── models_gen.go
 │   ├── internal/
@@ -256,6 +256,7 @@ go get github.com/rs/cors
 ### 3. Generate GraphQL Code
 
 ```bash
+go get github.com/99designs/gqlgen@v0.17.81
 go run github.com/99designs/gqlgen generate
 ```
 

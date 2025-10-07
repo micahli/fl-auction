@@ -1,0 +1,55 @@
+scalar Time
+
+type Auction {
+  id: ID!
+  startingBid: Float!
+  currentBid: Float!
+  currentWinner: String
+  duration: Int!
+  extendedBidding: Boolean!
+  startTime: String!
+  endTime: String!
+  status: AuctionStatus!
+  nextBid: Float!
+  timeRemaining: Int!
+}
+
+enum AuctionStatus {
+  ACTIVE
+  ENDED
+  PENDING
+}
+
+type Bid {
+  id: ID!
+  auctionId: ID!
+  userId: String!
+  amount: Float!
+  timestamp: String!
+}
+
+type AuctionEvent {
+  type: AuctionEventType!
+  auction: Auction
+  bid: Bid
+  error: String
+}
+
+enum AuctionEventType {
+  AUCTION_STARTED
+  BID_PLACED
+  AUCTION_ENDED
+}
+
+type Query {
+  currentAuction: Auction
+}
+
+type Mutation {
+  createAuction(startingBid: Float!, duration: Int, extendedBidding: Boolean): Auction!
+  placeBid(userId: String!, amount: Float!): Bid!
+}
+
+type Subscription {
+  auctionEvents: AuctionEvent!
+}

@@ -1,0 +1,80 @@
+# gqlgen.yml - GraphQL Code Generation Configuration
+
+# Where to find the GraphQL schema file(s)
+schema:
+  - graph/schema.graphql
+
+# Where to generate the GraphQL execution code
+exec:
+  filename: graph/generated.go
+  package: graph
+
+# Where to generate GraphQL type models (if not found via autobind)
+model:
+  filename: graph/model/models_gen.go
+  package: model
+
+# Where to generate/update resolver implementations
+resolver:
+  layout: follow-schema
+  dir: graph
+  package: graph
+  filename_template: "{name}.resolvers.go"
+  # This means: schema.resolvers.go will be created/updated in graph/
+
+# IMPORTANT: Autobind - Use existing Go types instead of generating new ones
+autobind:
+  - "github.com/micahli/fl-auction/auction-server/internal/model"
+
+# Scalar type mappings
+models:
+  # Map GraphQL ID to Go types
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  
+  # Map GraphQL Int to Go types
+  Int:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  
+  # Map GraphQL Time scalar to Go time.Time
+  Time:
+    model:
+      - time.Time
+  
+  # Explicitly map schema types to your domain models
+  Auction:
+    model:
+      - github.com/micahli/fl-auction/auction-server/internal/model.Auction
+  
+  Bid:
+    model:
+      - github.com/micahli/fl-auction/auction-server/internal/model.Bid
+  
+  AuctionEvent:
+    model:
+      - github.com/micahli/fl-auction/auction-server/internal/model.AuctionEvent
+  
+  AuctionStatus:
+    model:
+      - github.com/micahli/fl-auction/auction-server/internal/model.AuctionStatus
+  
+  AuctionEventType:
+    model:
+      - github.com/micahli/fl-auction/auction-server/internal/model.AuctionEventType
+
+# Optional: Skip generating certain types
+# omit_slice_element_pointers: false
+
+# Optional: Struct tag configuration
+# struct_tag: json
+
+# Optional: Enable/disable features
+# omit_complexity: false
+# omit_gqlgen_file_notice: false
